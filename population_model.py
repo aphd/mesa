@@ -31,8 +31,11 @@ class PopulationModel(Model):
         # Update agents' actions and the environment
         self.schedule.step()
 
-        # Ensure environmental health remains within reasonable bounds
-        if self.environment_health > 100:
-            self.environment_health = 100
-        elif self.environment_health < 0:
-            self.environment_health = 0
+        # Gradual natural recovery of the environment, slowed down (e.g., +0.2 per step)
+        self.environment_health += 0.2
+
+        # Ensure environmental health remains within reasonable bounds (0 to 200)
+        # if self.environment_health > 200:
+        #     self.environment_health = 200
+        # elif self.environment_health < 0:
+        #     self.environment_health = 0

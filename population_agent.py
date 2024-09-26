@@ -5,10 +5,11 @@ class PopulationAgent(Agent):
         super().__init__(unique_id, model)
         self.behavior = "neutral"  # Initial behavior: neutral
         self.energy = 100  # Resource or energy the agent has
+        self.good_action_probability = 0.5  # Start with 50% chance of good actions
 
     def step(self):
-        # Agent decides whether to perform a good or bad action
-        if self.random.random() < 0.5:
+        # Agent's action choice based on the adaptive good action probability
+        if self.random.random() < self.good_action_probability:
             self.do_good_action()
         else:
             self.do_bad_action()
@@ -17,22 +18,30 @@ class PopulationAgent(Agent):
         self.update_behavior()
 
     def do_good_action(self):
-        # Good actions improve the environment, but may cost the agent resources
+        # Good actions improve the environment more slowly
         self.behavior = "good"
-        self.energy -= 10  # Helping the environment takes effort/resources
-        self.model.environment_health += 5  # Improves environmental health
+        self.energy -= 1  # Small energy cost for doing good actions
+        self.model.environment_health += 2  # Decreased positive impact on environmental health
 
     def do_bad_action(self):
-        # Bad actions benefit the agent in the short term but harm the environment
+        # Bad actions now have minimal impact on the environment
         self.behavior = "bad"
-        self.energy += 10  # Gaining energy/resources by exploiting the environment
-        self.model.environment_health -= 5  # Degrades the environment
+        self.energy += 1  # Small energy gain for bad actions
+        self.model.environment_health -= 20  # Very limited negative impact on environment
 
     def update_behavior(self):
-        # Agents can receive penalties for bad behavior or rewards for good
+        # If penalized for bad behavior (when environment is poor)
         if self.behavior == "bad" and self.model.environment_health < 50:
-            # Penalize agents when the environment is in poor health
-            self.energy -= 5
+            self.energy -= 2  # Smaller penalty for bad actions
+            self.good_action_probability += 0.05  # Small increase in good action probability
+
+        # If rewarded for good behavior (when environment is healthy)
         elif self.behavior == "good" and self.model.environment_health > 70:
-            # Reward agents when the environment is healthy
-            self.energy += 5
+            self.energy += 2  # Smaller reward for good actions
+            self.good_action_probability += 0.05  # Small increase in good action probability
+
+        # Cap the good action probability between 0.5 and 1.0 (50% to 100%)
+        if self.good_action_probability > 1.0:
+            self.good_action_probability = 1.0
+        elif self.good_action_probability < 0.5:
+            self.good_action_probability = 0.5
