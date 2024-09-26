@@ -1,7 +1,4 @@
-from mesa import Agent, Model
-from mesa.time import RandomActivation
-from mesa.space import MultiGrid
-from mesa.datacollection import DataCollector
+from mesa import Agent
 
 class PopulationAgent(Agent):
     def __init__(self, unique_id, model):
@@ -39,37 +36,3 @@ class PopulationAgent(Agent):
         elif self.behavior == "good" and self.model.environment_health > 70:
             # Reward agents when the environment is healthy
             self.energy += 5
-
-
-class PopulationModel(Model):
-    def __init__(self, width, height, N):
-        self.num_agents = N
-        self.grid = MultiGrid(width, height, True)
-        self.schedule = RandomActivation(self)
-        self.environment_health = 100  # Environmental health starts at 100 (good)
-
-        # Create agents
-        for i in range(self.num_agents):
-            agent = PopulationAgent(i, self)  # Now this is defined
-            self.schedule.add(agent)
-            x = self.random.randrange(self.grid.width)
-            y = self.random.randrange(self.grid.height)
-            self.grid.place_agent(agent, (x, y))
-
-        self.datacollector = DataCollector(
-            model_reporters={"Environment Health": "environment_health"},
-            agent_reporters={"Behavior": "behavior"}
-        )
-
-    def step(self):
-        # Collect data at each step
-        self.datacollector.collect(self)
-
-        # Update agents' actions and the environment
-        self.schedule.step()
-
-        # Ensure environmental health remains within reasonable bounds
-        if self.environment_health > 100:
-            self.environment_health = 100
-        elif self.environment_health < 0:
-            self.environment_health = 0

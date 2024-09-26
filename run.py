@@ -1,4 +1,4 @@
-from model import PopulationModel
+from population_model import PopulationModel
 import matplotlib.pyplot as plt
 
 # Create the model
