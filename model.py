@@ -7,7 +7,7 @@ class PopulationAgent(Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.behavior = "neutral"  # Initial behavior: neutral
-        self.food = 100  # Resource or energy the agent has
+        self.tokens = 100  # Resource or energy the agent has
 
     def step(self):
         # Agent decides whether to perform a good or bad action
@@ -22,23 +22,23 @@ class PopulationAgent(Agent):
     def do_good_action(self):
         # Good actions improve the environment, but may cost the agent resources
         self.behavior = "good"
-        self.food -= 10  # Helping the environment takes effort/resources
+        self.tokens -= 10  # Helping the environment takes effort/resources
         self.model.environment_health += 5  # Improves environmental health
 
     def do_bad_action(self):
         # Bad actions benefit the agent in the short term but harm the environment
         self.behavior = "bad"
-        self.food += 10  # Gaining food/resources by exploiting the environment
+        self.tokens += 10  # Gaining tokens/resources by exploiting the environment
         self.model.environment_health -= 5  # Degrades the environment
 
     def update_behavior(self):
         # Agents can receive penalties for bad behavior or rewards for good
         if self.behavior == "bad" and self.model.environment_health < 50:
             # Penalize agents when the environment is in poor health
-            self.food -= 5
+            self.tokens -= 5
         elif self.behavior == "good" and self.model.environment_health > 70:
             # Reward agents when the environment is healthy
-            self.food += 5
+            self.tokens += 5
 
 
 class PopulationModel(Model):
