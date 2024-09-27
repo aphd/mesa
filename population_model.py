@@ -36,7 +36,7 @@ class PopulationModel(Model):
         self.schedule.step()
 
         # Gradual natural recovery of the environment, slowed down (e.g., +0.2 per step)
-        self.environment_health += 0.2
+        # self.environment_health += 0.2
 
         # Ensure environmental health remains within reasonable bounds (0 to 200)
         # if self.environment_health > 200:
