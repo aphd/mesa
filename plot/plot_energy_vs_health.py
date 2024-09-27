@@ -1,12 +1,11 @@
-from population_model import PopulationModel
 import numpy as np
 
-def plot_energy_vs_health(plt):
-    model = PopulationModel(10, 10, 50)
+def plot_energy_vs_health(plt, model):
     agent_energies = []
     environment_health_data = []
+    duration = model.get_duration()
 
-    for _ in range(365):
+    for _ in range(duration):
         model.step()
         average_energy = np.mean([agent.energy for agent in model.schedule.agents])
         agent_energies.append(average_energy)

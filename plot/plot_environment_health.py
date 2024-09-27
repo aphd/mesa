@@ -1,11 +1,8 @@
-from population_model import PopulationModel
-import numpy as np
 
-def plot_environment_health(plt):
-    model = PopulationModel(10, 10, 50)
+def plot_environment_health(plt, model):
     environment_health_data = []
-
-    for _ in range(365):
+    duration = model.get_duration()
+    for _ in range(duration):
         model.step()
         model_data = model.datacollector.get_model_vars_dataframe()
         environment_health_data.append(model_data["Environment Health"].values[-1])  # Get latest health

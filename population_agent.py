@@ -33,12 +33,12 @@ class PopulationAgent(Agent):
         # If penalized for bad behavior (when environment is poor)
         if self.behavior == "bad" and self.model.environment_health < 50:
             self.energy -= 2  # Smaller penalty for bad actions
-            self.good_action_probability += 0.05  # Small increase in good action probability
+            self.good_action_probability += 0.01  # Small increase in good action probability
 
         # If rewarded for good behavior (when environment is healthy)
         elif self.behavior == "good" and self.model.environment_health > 70:
             self.energy += 2  # Smaller reward for good actions
-            self.good_action_probability += 0.05  # Small increase in good action probability
+            self.good_action_probability += 0.01  # Small increase in good action probability
 
         # Cap the good action probability between 0.5 and 1.0 (50% to 100%)
         if self.good_action_probability > 1.0:

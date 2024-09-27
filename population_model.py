@@ -5,11 +5,12 @@ from mesa.datacollection import DataCollector
 from population_agent import PopulationAgent
 
 class PopulationModel(Model):
-    def __init__(self, width, height, N):
+    def __init__(self, width, height, N, duration):
         self.num_agents = N
         self.grid = MultiGrid(width, height, True)
         self.schedule = RandomActivation(self)
         self.environment_health = 100  # Environmental health starts at 100 (good)
+        self.duration = duration
 
         # Create agents
         for i in range(self.num_agents):
@@ -23,6 +24,9 @@ class PopulationModel(Model):
             model_reporters={"Environment Health": "environment_health"},
             agent_reporters={"Behavior": "behavior"}
         )
+        
+    def get_duration(self):
+        return self.duration
 
     def step(self):
         # Collect data at each step
