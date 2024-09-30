@@ -4,5 +4,5 @@
 source venv/bin/activate
 python -m pip list
 
-python run.py
+python plot/__init__.py
 ```

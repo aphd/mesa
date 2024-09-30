@@ -1,4 +1,14 @@
-from plot.plot_results import run_simulation_and_plot
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'plot')))
+import plot
+
+
+def get_model():
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'fixed-incentives-model')))
+    from population_model import PopulationModel
+    model = PopulationModel(10, 10, 50, 365)
+    return model
 
 if __name__ == "__main__":
-    run_simulation_and_plot()
+    plot.run_all(get_model())
