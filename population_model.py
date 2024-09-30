@@ -9,7 +9,7 @@ class PopulationModel(Model):
         self.num_agents = N
         self.grid = MultiGrid(width, height, True)
         self.schedule = RandomActivation(self)
-        self.environment_health = 100  # Environmental health starts at 100 (good)
+        self.environment_health = 0  # Environmental health starts at 100 (good)
         self.duration = duration
 
         # Create agents
