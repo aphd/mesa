@@ -18,30 +18,29 @@ class PopulationAgent(Agent):
         self.update_behavior()
 
     def do_good_action(self):
-        # Good actions improve the environment more slowly
         self.behavior = "good"
         self.energy -= 1  # Small energy cost for doing good actions
-        self.model.environment_health += 2  # Decreased positive impact on environmental health
+        self.model.environment_health += 2  # Positive impact on environmental health
 
     def do_bad_action(self):
-        # Bad actions now have minimal impact on the environment
         self.behavior = "bad"
         self.energy += 1  # Small energy gain for bad actions
-        self.model.environment_health -= 20  # Very limited negative impact on environment
+        self.model.environment_health -= 20  # Significant negative impact on environment
 
     def update_behavior(self):
-        # If penalized for bad behavior (when environment is poor)
-        if self.behavior == "bad" and self.model.environment_health < 50:
-            self.energy -= .01  # Smaller penalty for bad actions
-            self.good_action_probability += 0.005  # Small increase in good action probability
+        # Calculate the proportion of good behavior in the model
+        p_good = self.model.calculate_proportion_good()
 
-        # If rewarded for good behavior (when environment is healthy)
-        elif self.behavior == "good" and self.model.environment_health > 70:
-            self.energy += .01  # Smaller reward for good actions
-            self.good_action_probability += 0.001  # Small increase in good action probability
+        # Adjust rewards and penalties based on behavior proportion
+        if self.behavior == "bad":
+            penalty = -5 * (1 / (p_good + 0.01))  # Increased penalty when good behavior is low
+            self.energy += penalty
+            self.good_action_probability += 0.005  # Encourage good behavior
+
+        elif self.behavior == "good":
+            reward = 5 * (1 / (p_good + 0.01))  # Increased reward when good behavior is low
+            self.energy += reward
+            self.good_action_probability += 0.001  # Slight increase in good action probability
 
         # Cap the good action probability between 0.5 and 1.0 (50% to 100%)
-        if self.good_action_probability > 1.0:
-            self.good_action_probability = 1.0
-        elif self.good_action_probability < 0.5:
-            self.good_action_probability = 0.5
+        self.good_action_probability = max(0.5, min(self.good_action_probability, 1.0))

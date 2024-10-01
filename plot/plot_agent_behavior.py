@@ -1,4 +1,4 @@
-def plot_agent_behavior(plt, model):
+def plot_agent_behavior(model, plt):
     good_agents_count = []
     bad_agents_count = []
     duration = model.get_duration()
