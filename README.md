@@ -2,5 +2,8 @@
 
 ```
 source venv/bin/activate
-python run.py
+python -m pip list
+
+python write_plot.py
+python write_tex.py
 ```
