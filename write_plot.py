@@ -17,5 +17,5 @@ def get_variable_model():
     return model
 
 if __name__ == "__main__":
-    # plot.run_all(get_fixed_model())
+    #plot.run_all(get_fixed_model())
     plot.run_all(get_variable_model())

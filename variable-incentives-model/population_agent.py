@@ -6,6 +6,8 @@ class PopulationAgent(Agent):
         self.behavior = "neutral"  # Initial behavior: neutral
         self.energy = 100  # Resource or energy the agent has
         self.good_action_probability = 0.5  # Start with 50% chance of good actions
+        self.token = 10  # Initialize token variable
+        self.max_token = 10
 
     def step(self):
         # Agent's action choice based on the adaptive good action probability
@@ -31,15 +33,20 @@ class PopulationAgent(Agent):
         # Calculate the proportion of good behavior in the model
         p_good = self.model.calculate_proportion_good()
 
-        # Adjust rewards and penalties based on behavior proportion
+        # Set token reward/penalty based on behavior proportion
         if self.behavior == "bad":
-            penalty = -5 * (1 / (p_good + 0.01))  # Increased penalty when good behavior is low
-            self.energy += penalty
+            token_penalty = self.max_token * (1 - p_good)  # Higher penalty when good behavior is low
+            self.token -= token_penalty  # Decrease tokens based on penalty
+
+        elif self.behavior == "good":
+            token_reward = self.max_token * (1 - p_good)  # Lower reward when good behavior is high
+            self.token += token_reward  # Increase tokens based on reward
+
+        # Adjust good action probability based on behavior
+        if self.behavior == "bad":
             self.good_action_probability += 0.005  # Encourage good behavior
 
         elif self.behavior == "good":
-            reward = 5 * (1 / (p_good + 0.01))  # Increased reward when good behavior is low
-            self.energy += reward
             self.good_action_probability += 0.001  # Slight increase in good action probability
 
         # Cap the good action probability between 0.5 and 1.0 (50% to 100%)

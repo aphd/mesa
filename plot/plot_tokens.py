@@ -3,7 +3,7 @@ def plot_tokens(plt, model):
     token_data = []
 
     # Run the simulation for the specified number of steps (days)
-    for day in range(total_days):
+    for _ in range(total_days):
         model.step()
 
         # Collect tokens for all agents
