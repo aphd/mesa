@@ -20,8 +20,6 @@ def plot_tokens(plt, model):
     plt.grid(True)
     plt.legend()
 
-
-
 # Example usage
 if __name__ == "__main__":
     pass

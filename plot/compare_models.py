@@ -12,12 +12,9 @@ def compare_models(models):
     import matplotlib.pyplot as plt
     plt.figure(figsize=(12, 8))
     for index, model in enumerate(models):
+        print(model.get_name())
         print(f"Index: {index}, Element: {model}")
-    # for model in models:
-        # plt.subplot(2, 2, 1)
-        # plot_tokens(plt, model)
-        # plt.subplot(2, 2, 2)
-        # plot_average_energy(plt, model)
-        # plt.tight_layout()
-        # plt.show()
-    
+        plt.subplot(2, 2, index + 1)
+        plot_tokens(plt, model)
+    plt.tight_layout()
+    plt.show()

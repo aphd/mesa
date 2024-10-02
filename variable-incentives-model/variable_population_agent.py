@@ -3,11 +3,15 @@ from mesa import Agent
 class PopulationAgent(Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
+        self.name = "Variable Agent"
         self.behavior = "neutral"  # Initial behavior: neutral
         self.energy = 100  # Resource or energy the agent has
         self.good_action_probability = 0.5  # Start with 50% chance of good actions
         self.token = 10  # Initialize token variable
         self.max_token = 10
+
+    def get_name(self):
+        return self.name
 
     def step(self):
         # Agent's action choice based on the adaptive good action probability
