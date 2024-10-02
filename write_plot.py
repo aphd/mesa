@@ -16,6 +16,7 @@ def get_fixed_model():
     return model
 
 def get_variable_model():
+    # refactor this
     variable_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'variable-incentives-model'))
     if variable_path not in sys.path:
         sys.path.insert(0, variable_path)
