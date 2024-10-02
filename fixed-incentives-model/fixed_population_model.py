@@ -2,19 +2,21 @@ from mesa import Model
 from mesa.time import RandomActivation
 from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
-from population_agent import PopulationAgent
+from fixed_population_agent import PopulationAgent
 
 class PopulationModel(Model):
     def __init__(self, width, height, N, duration):
         self.num_agents = N
+        self.name = "Fix Model"
         self.grid = MultiGrid(width, height, True)
         self.schedule = RandomActivation(self)
-        self.environment_health = 100  # Environmental health starts at 100 (good)
+        self.environment_health = 0  # Environmental health starts at 100 (good)
         self.duration = duration
 
         # Create agents
         for i in range(self.num_agents):
             agent = PopulationAgent(i, self)
+            # print(agent.get_name())
             self.schedule.add(agent)
             x = self.random.randrange(self.grid.width)
             y = self.random.randrange(self.grid.height)
@@ -25,12 +27,10 @@ class PopulationModel(Model):
             agent_reporters={"Behavior": "behavior"}
         )
         
-    def calculate_proportion_good(self):
-        good_count = sum(1 for agent in self.schedule.agents if agent.behavior == "good")
-        return good_count / self.num_agents if self.num_agents > 0 else 0
-
+    def get_name(self):
+        return self.name
+        
     def get_duration(self):
-        """Return the duration of the model."""
         return self.duration
 
     def step(self):
@@ -40,5 +40,11 @@ class PopulationModel(Model):
         # Update agents' actions and the environment
         self.schedule.step()
 
+        # Gradual natural recovery of the environment, slowed down (e.g., +0.2 per step)
+        # self.environment_health += 0.2
+
         # Ensure environmental health remains within reasonable bounds (0 to 200)
-        self.environment_health = max(0, min(self.environment_health, 200))
+        # if self.environment_health > 200:
+        #     self.environment_health = 200
+        # elif self.environment_health < 0:
+        #     self.environment_health = 0

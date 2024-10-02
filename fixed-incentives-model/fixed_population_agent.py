@@ -3,10 +3,15 @@ from mesa import Agent
 class PopulationAgent(Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
+        self.name = "Fixed Agent"
         self.behavior = "neutral"  # Initial behavior: neutral
         self.energy = 100  # Resource or energy the agent has
         self.good_action_probability = 0.5  # Start with 50% chance of good actions
-
+        self.token = 0  # Initialize token variable
+    
+    def get_name(self):
+        return self.name
+    
     def step(self):
         # Agent's action choice based on the adaptive good action probability
         if self.random.random() < self.good_action_probability:
@@ -22,12 +27,14 @@ class PopulationAgent(Agent):
         self.behavior = "good"
         self.energy -= 1  # Small energy cost for doing good actions
         self.model.environment_health += 2  # Decreased positive impact on environmental health
+        self.token += 1  # Increase token for good action
 
     def do_bad_action(self):
         # Bad actions now have minimal impact on the environment
         self.behavior = "bad"
         self.energy += 1  # Small energy gain for bad actions
         self.model.environment_health -= 20  # Very limited negative impact on environment
+        self.token -= 1  # Decrease token for bad action
 
     def update_behavior(self):
         # If penalized for bad behavior (when environment is poor)
