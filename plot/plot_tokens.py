@@ -12,11 +12,14 @@ def plot_tokens(plt, model):
 
     # Create a plot with days on the x-axis and accumulated tokens on the y-axis
     plt.plot(range(total_days), token_data, label='Total Tokens')
-    
-    # Add labels and title
-    plt.set_xlabel('Days')
-    plt.set_ylabel('Accumulated Tokens')
-    plt.set_title('Tokens Accumulated by Agents Over Time')
+
+    set_xlabel = plt.set_xlabel if hasattr(plt, 'set_xlabel') else plt.xlabel
+    set_ylabel = plt.set_ylabel if hasattr(plt, 'set_ylabel') else plt.ylabel
+    set_title = plt.set_title if hasattr(plt, 'set_title') else plt.title
+    set_xlabel('Days')
+    set_ylabel('Accumulated Tokens')
+    set_title('Tokens Accumulated by Agents Over Time')
+
     plt.grid(True)
     plt.legend()
 
