@@ -1,4 +1,3 @@
-
 def write_agent_behavior(model):
     good_agents_count = []
     bad_agents_count = []
