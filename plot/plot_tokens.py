@@ -14,9 +14,9 @@ def plot_tokens(plt, model):
     plt.plot(range(total_days), token_data, label='Total Tokens')
     
     # Add labels and title
-    plt.xlabel('Days')
-    plt.ylabel('Accumulated Tokens')
-    plt.title('Tokens Accumulated by Agents Over Time')
+    plt.set_xlabel('Days')
+    plt.set_ylabel('Accumulated Tokens')
+    plt.set_title('Tokens Accumulated by Agents Over Time')
     plt.grid(True)
     plt.legend()
 

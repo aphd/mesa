@@ -16,7 +16,7 @@ class PopulationModel(Model):
         # Create agents
         for i in range(self.num_agents):
             agent = PopulationAgent(i, self)
-            print(agent.get_name())
+            # print(agent.get_name())
             self.schedule.add(agent)
             x = self.random.randrange(self.grid.width)
             y = self.random.randrange(self.grid.height)

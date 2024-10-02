@@ -7,8 +7,8 @@ class PopulationAgent(Agent):
         self.behavior = "neutral"  # Initial behavior: neutral
         self.energy = 100  # Resource or energy the agent has
         self.good_action_probability = 0.5  # Start with 50% chance of good actions
-        self.token = 10  # Initialize token variable
-        self.max_token = 10
+        self.token = 0  # Initialize token variable
+        self.max_token = 5
 
     def get_name(self):
         return self.name

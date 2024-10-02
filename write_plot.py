@@ -31,12 +31,7 @@ def get_variable_model():
 def compare_models():
     sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'plot')))
     from plot.compare_models import compare_models
-    
-    model_1 = get_fixed_model()
-    compare_models([model_1])
-    
-    model_2 = get_variable_model()
-    compare_models([model_2])
+    compare_models([get_fixed_model(), get_variable_model()])
 
 def subplot_visualizer():
     sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'plot')))
@@ -45,3 +40,4 @@ def subplot_visualizer():
 
 if __name__ == "__main__":
     compare_models()
+    # subplot_visualizer()
