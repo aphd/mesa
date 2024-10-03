@@ -1,3 +1,4 @@
+# plot/plot_tokens.py
 def plot_tokens(plt, model):
     total_days = model.get_duration()
     token_data = []

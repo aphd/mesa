@@ -1,14 +1,30 @@
+import argparse
 from src.utils.get_model import get_fixed_model, get_variable_model
-from plot.compare_tokens import compare_tokens
-from plot.subplot_visualizer import subplot_visualizer
+from plot import compare_tokens as compare_tokens_plot, subplot_visualizer
 
-def write_compare_token():
-    compare_tokens([get_fixed_model(), get_variable_model()])
+def compare_tokens():
+    compare_tokens_plot([get_fixed_model(), get_variable_model()])
 
-def write_subplot_visualizer():
+def subplots_fixed_model():
     subplot_visualizer(get_fixed_model())
 
+def subplots_variable_model():
+    subplot_visualizer(get_variable_model())
+
+def main(function_name):
+    functions = {
+        'compare_tokens': compare_tokens,
+        'subplots_fixed_model': subplots_fixed_model,
+        'subplots_variable_model': subplots_variable_model,
+    }
+
+    if function_name in functions:
+        functions[function_name]()
+    else:
+        raise ValueError(f"Function '{function_name}' is not available. Choose from: {', '.join(functions.keys())}")
+
 if __name__ == "__main__":
-    # TODO add option to choose amoing different options
-    # write_compare_token()
-    write_subplot_visualizer()
+    parser = argparse.ArgumentParser(description="Run specific function for plotting.")
+    parser.add_argument('function', type=str, help="Name of the function to run (e.g., compare_tokens or subplots_fixed_model)")
+    args = parser.parse_args()
+    main(args.function)
