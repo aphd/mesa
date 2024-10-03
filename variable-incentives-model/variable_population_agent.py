@@ -44,7 +44,7 @@ class PopulationAgent(Agent):
 
         elif self.behavior == "good":
             token_reward = self.max_token * (1 - p_good)  # Lower reward when good behavior is high
-            self.token += token_reward  # Increase tokens based on reward
+            self.token +=max(token_reward, 0.2)  # Ensure token never goes below .2
 
         # Adjust good action probability based on behavior
         if self.behavior == "bad":
