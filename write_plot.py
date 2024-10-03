@@ -9,5 +9,6 @@ def write_subplot_visualizer():
     subplot_visualizer(get_fixed_model())
 
 if __name__ == "__main__":
+    # TODO add option to choose amoing different options
     # write_compare_token()
     write_subplot_visualizer()
