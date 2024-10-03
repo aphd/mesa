@@ -10,5 +10,5 @@ def write_subplot_visualizer():
 
 if __name__ == "__main__":
     # TODO add option to choose amoing different options
-    # write_compare_token()
-    write_subplot_visualizer()
+    write_compare_token()
+    # write_subplot_visualizer()
