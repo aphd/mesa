@@ -1,7 +1,7 @@
 from plot.plot_tokens import plot_tokens
 import matplotlib.pyplot as plt
 
-def compare_tokens(models):
+def compare_tokens_plot(models):
     # Create a single figure and axis for all plots
     plt.figure(figsize=(12, 8))
     ax = plt.gca()  # Get the current axis
