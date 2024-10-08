@@ -12,4 +12,6 @@ python write_plot.py compare_behavior
 python write_tex.py compare_tokens
 python write_tex.py agent_behavior_fixed_model
 python write_tex.py agent_behavior_variable_model
+python write_tex.py compare_behavior
+
 ```

@@ -15,7 +15,6 @@ def compare_behavior_plot(models):
     plt.show()
 
 def plot_agent_behavior(plt, model):
-    good_agents_count = []
     bad_agents_count = []
     duration = model.get_duration()
     for _ in range(duration):
