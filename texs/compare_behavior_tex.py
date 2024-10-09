@@ -2,9 +2,9 @@ def compare_behavior_tex(models):
     latex_code = r"""\begin{tikzpicture}
     \begin{axis}[ 
         xlabel={Time (Days)},
-        ylabel={Number of Agents},
+        ylabel={Number of Bad Agents},
         xmin=0, xmax=365,
-        ymin=0, ymax=10000,
+        ymin=0, ymax=70,
         grid=major,
         legend pos=north west
     ]""" + "\n"
