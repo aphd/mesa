@@ -7,7 +7,7 @@ from fixed_population_agent import PopulationAgent
 class PopulationModel(Model):
     def __init__(self, width, height, N, duration):
         self.num_agents = N
-        self.name = "Fix Model"
+        self.name = "Fixed Model"
         self.grid = MultiGrid(width, height, True)
         self.schedule = RandomActivation(self)
         self.environment_health = 0  # Environmental health starts at 100 (good)

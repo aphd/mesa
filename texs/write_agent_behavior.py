@@ -46,7 +46,7 @@ def write_agent_behavior(model):
     \end{axis}
     \end{tikzpicture}"""
 
-    fn = "/tmp/output.tex"
+    fn = f"/tmp/agent_behavior_{model.name}.tex".replace(" ", "_").lower()
     with open(fn, "w") as f: f.write(latex_code)
     print(f"\033[92mFile created successfully! {fn}\033[0m")
 
