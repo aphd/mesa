@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
 
 def boxplot_behavior_plot():
     # Load the data from the CSV file (assume it has b1, b2, ... bn columns)
@@ -18,10 +19,14 @@ def boxplot_behavior_plot():
     plt.boxplot(data_to_plot, labels=columns)
 
     # Add title and labels
-    plt.title(f'Comparison of {len(columns)} Behavior Categories')
-    plt.ylabel('Values')
+    plt.title(f'Comparison of the minimum incentives across {len(columns)} Behavior Categories')
+    plt.ylabel('Tokens')
 
-    # Show the plot
+    # Save the plot to the specified directory
+    fn = os.getenv("FN_DIR") + "/boxplot_behavior_plot.pdf"
+    plt.savefig(fn)
+
+    # Optionally, show the plot
     plt.show()
 
 # Call the function to plot
