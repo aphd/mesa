@@ -1,4 +1,5 @@
 from mesa import Agent
+import random
 
 class PopulationAgent(Agent):
     def __init__(self, unique_id, model):
@@ -8,7 +9,10 @@ class PopulationAgent(Agent):
         self.energy = 100  # Resource or energy the agent has
         self.good_action_probability = 0.5  # Start with 50% chance of good actions
         self.token = 0  # Initialize token variable
-    
+        
+        # Determine whether this agent belongs to the 75% receptive group
+        self.is_receptive = random.random() < 0.75  # 75% chance of being receptive to rewards
+
     def get_name(self):
         return self.name
     
@@ -37,18 +41,23 @@ class PopulationAgent(Agent):
         self.token -= 1  # Decrease token for bad action
 
     def update_behavior(self):
-        # If penalized for bad behavior (when environment is poor)
-        if self.behavior == "bad" and self.model.environment_health < 50:
-            self.energy -= .01  # Smaller penalty for bad actions
-            self.good_action_probability += 0.005  # Small increase in good action probability
+        # Only update good_action_probability if the agent is receptive to rewards
+        if self.is_receptive:
+            # If penalized for bad behavior (when environment is poor)
+            if self.behavior == "bad" and self.model.environment_health < 50:
+                self.energy -= .01  # Smaller penalty for bad actions
+                self.good_action_probability += 0.1  # Small increase in good action probability
 
-        # If rewarded for good behavior (when environment is healthy)
-        elif self.behavior == "good" and self.model.environment_health > 70:
-            self.energy += .01  # Smaller reward for good actions
-            self.good_action_probability += 0.001  # Small increase in good action probability
+            # If rewarded for good behavior (when environment is healthy)
+            elif self.behavior == "good" and self.model.environment_health > 70:
+                self.energy += .01  # Smaller reward for good actions
+                self.good_action_probability += 0.00001  # Small increase in good action probability
 
-        # Cap the good action probability between 0.5 and 1.0 (50% to 100%)
-        if self.good_action_probability > 1.0:
-            self.good_action_probability = 1.0
-        elif self.good_action_probability < 0.5:
+            # Cap the good action probability between 0.5 and 1.0 (50% to 100%)
+            if self.good_action_probability > 1.0:
+                self.good_action_probability = 1.0
+            elif self.good_action_probability < 0.5:
+                self.good_action_probability = 0.5
+        else:
+            # If the agent is not receptive, keep good_action_probability fixed at 0.5
             self.good_action_probability = 0.5

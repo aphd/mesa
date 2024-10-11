@@ -1,3 +1,5 @@
+import os
+
 def write_agent_behavior(model):
     good_agents_count = []
     bad_agents_count = []
@@ -14,7 +16,7 @@ def write_agent_behavior(model):
         xlabel={Time (Days)},
         ylabel={Number of Agents},
         xmin=0, xmax=365,
-        ymin=0, ymax=50,
+        ymin=0, ymax=65,
         grid=major,
         legend pos=north west
     ]
@@ -46,7 +48,7 @@ def write_agent_behavior(model):
     \end{axis}
     \end{tikzpicture}"""
 
-    fn = "/tmp/output.tex"
+    fn = os.getenv("FN_DIR") + f"/agent_behavior_{model.name}.tex".replace(" ", "_").lower()
     with open(fn, "w") as f: f.write(latex_code)
     print(f"\033[92mFile created successfully! {fn}\033[0m")
 

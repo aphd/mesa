@@ -1,10 +1,12 @@
+import os
+
 def compare_behavior_tex(models):
     latex_code = r"""\begin{tikzpicture}
     \begin{axis}[ 
         xlabel={Time (Days)},
-        ylabel={Number of Agents},
+        ylabel={Number of Bad Agents},
         xmin=0, xmax=365,
-        ymin=0, ymax=10000,
+        ymin=0, ymax=35,
         grid=major,
         legend pos=north west
     ]""" + "\n"
@@ -40,8 +42,8 @@ def compare_behavior_tex(models):
 
     latex_code += r"""    \end{axis}
 \end{tikzpicture}"""
-
-    fn = "/tmp/output.tex"
+    
+    fn = os.getenv("FN_DIR") + "/compare_behaviour.tex"
     with open(fn, "w") as f:
         f.write(latex_code)
 

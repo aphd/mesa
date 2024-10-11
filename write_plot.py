@@ -1,6 +1,6 @@
 import argparse
 from src.utils.get_model import get_fixed_model, get_variable_model
-from plot import compare_tokens_plot, subplot_visualizer, compare_behavior_plot
+from plot import compare_tokens_plot, subplot_visualizer, compare_behavior_plot, boxplot_behavior_plot
 
 def compare_tokens():
     compare_tokens_plot([get_fixed_model(), get_variable_model()])
@@ -14,12 +14,16 @@ def subplots_fixed_model():
 def subplots_variable_model():
     subplot_visualizer(get_variable_model())
 
+def boxplot_behavior():
+    boxplot_behavior_plot()
+
 def main(function_name):
     functions = {
         'compare_tokens': compare_tokens,
         'compare_behavior': compare_behavior,
         'subplots_fixed_model': subplots_fixed_model,
         'subplots_variable_model': subplots_variable_model,
+        'boxplot_behavior': boxplot_behavior,
     }
 
     if function_name in functions:

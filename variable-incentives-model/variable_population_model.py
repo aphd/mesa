@@ -6,7 +6,7 @@ from variable_population_agent import PopulationAgent
 
 class PopulationModel(Model):
     def __init__(self, width, height, N, duration):
-        self.name = "Var Model"
+        self.name = "Variable Model"
         self.num_agents = N
         self.grid = MultiGrid(width, height, True)
         self.schedule = RandomActivation(self)

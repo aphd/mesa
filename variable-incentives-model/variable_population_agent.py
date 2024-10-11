@@ -8,7 +8,7 @@ class PopulationAgent(Agent):
         self.energy = 100  # Resource or energy the agent has
         self.good_action_probability = 0.5  # Start with 50% chance of good actions
         self.token = 0  # Initialize token variable
-        self.max_token = 5
+        self.max_token = 12
 
     def get_name(self):
         return self.name
@@ -41,17 +41,14 @@ class PopulationAgent(Agent):
         if self.behavior == "bad":
             token_penalty = self.max_token * (1 - p_good)  # Higher penalty when good behavior is low
             self.token -= token_penalty  # Decrease tokens based on penalty
-
+            token_reward = 0  # No reward when behavior is bad
         elif self.behavior == "good":
             token_reward = self.max_token * (1 - p_good)  # Lower reward when good behavior is high
-            self.token +=max(token_reward, 0.2)  # Ensure token never goes below .2
+            self.token += max(token_reward, 0.2)  # Ensure token never goes below 0.2
 
-        # Adjust good action probability based on behavior
-        if self.behavior == "bad":
-            self.good_action_probability += 0.005  # Encourage good behavior
-
-        elif self.behavior == "good":
-            self.good_action_probability += 0.001  # Slight increase in good action probability
+        # Adjust good action probability based on the reward earned
+        reward_factor = token_reward / self.max_token  # Normalized reward factor between 0 and 1
+        self.good_action_probability += reward_factor * 0.05  # Increase probability proportionally to reward
 
         # Cap the good action probability between 0.5 and 1.0 (50% to 100%)
         self.good_action_probability = max(0.5, min(self.good_action_probability, 1.0))

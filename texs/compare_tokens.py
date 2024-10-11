@@ -1,7 +1,10 @@
-# plot/compare_tokens.py
+import os
 
 def compare_tokens(models):
-    latex_code = r"""\begin{tikzpicture}
+    latex_code = r"""
+    \definecolor{myred}{HTML}{f53851}   % Define the red color
+    \definecolor{mygreen}{HTML}{c6f56e} % Define the green color
+    \begin{tikzpicture}
     \begin{axis}[ 
         xlabel={Time (Days)},
         ylabel={Accumulated Tokens},
@@ -24,8 +27,8 @@ def compare_tokens(models):
             token_data.append(total_tokens)
 
         # Determine color and style based on the index
-        color = "red" if index == 0 else "green"
-        line_style = "thick" if index == 0 else "thick, dashed"
+        color = "myred" if index == 0 else "mygreen"
+        line_style = "thick" if index == 0 else "thick"
         label = "Fixed Model" if index == 0 else "Variable Model"
 
         # Add token data for the current model to the LaTeX code
@@ -45,7 +48,7 @@ def compare_tokens(models):
     latex_code += r"""    \end{axis}
 \end{tikzpicture}"""
 
-    fn = "/tmp/output.tex"
+    fn = os.getenv("FN_DIR") + "/compare_tokens.tex"
     with open(fn, "w") as f:
         f.write(latex_code)
 
